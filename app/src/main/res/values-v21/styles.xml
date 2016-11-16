@@ -1,0 +1,16 @@
+<resources>
+        <style name="AppTheme" parent="@style/BaseAppTheme">
+           <!-- <item name="android:windowIsTranslucent">true</item>-->
+          <!--  <item name="android:actionModeShareDrawable">@drawable/share</item>
+            <item name="android:actionModeWebSearchDrawable">@drawable/search</item>
+            <item name="android:windowActionModeOverlay">false</item>-->
+
+
+        </style>
+    <!--<style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>-->
+</resources>

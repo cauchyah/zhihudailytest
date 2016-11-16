@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LogoView">
+        <attr name="ring_width" format="dimension"></attr>
+        <attr name="radius" format="dimension"></attr>
+        <attr name="text_color" format="color"></attr>
+        <attr name="text_size" format="dimension"></attr>
+        <attr name="offset" format="dimension"></attr>
+    </declare-styleable>
+</resources>

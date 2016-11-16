@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Volley-1.0.3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jiechic.library/Volley/1.0.3/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jiechic.library/Volley/1.0.3/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jiechic.library/Volley/1.0.3/e5e09e07f5620c37227e564639d249f2dde31b72/Volley-1.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

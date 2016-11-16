@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/avatar"
+        android:layout_margin="30dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+    <TextView
+        style="@style/text_view"
+        android:id="@+id/name"
+        android:text="@string/app_name"
+        android:paddingBottom="30dp"
+        />
+    <View
+        android:layout_gravity="center"
+        android:background="@color/background"
+        android:layout_width="230dp"
+        android:layout_height="1dp"/>
+    <TextView
+        android:padding="20dp"
+        android:id="@+id/sina"
+        style="@style/text_view"
+        android:text="绑定新浪微博"
+         />
+    <View
+        android:layout_gravity="center"
+        android:background="@color/background"
+        android:layout_width="230dp"
+        android:layout_height="1dp"/>
+    <TextView
+        android:id="@+id/qq"
+        android:padding="20dp"
+        style="@style/text_view"
+        android:text="解绑腾讯QQ"
+         />
+    <View
+        android:layout_gravity="center"
+        android:background="@color/background"
+        android:layout_width="230dp"
+        android:layout_height="1dp"/>
+    <Button
+        android:layout_margin="40dp"
+        android:id="@+id/logout"
+        android:textColor="@color/orangered"
+        android:text="@string/logout"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

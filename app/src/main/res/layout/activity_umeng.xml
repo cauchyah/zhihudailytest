@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:orientation="vertical"
+    tools:context="com.zhihudailytest.Activity.UmengActivity">
+    <Button
+        android:id="@+id/share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="一键分享"
+        />
+    <Button
+        android:id="@+id/auth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="授权登录"
+        />
+    <Button
+        android:id="@+id/deauth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="取消授权"
+        />
+    <EditText
+        android:id="@+id/show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
