@@ -26,6 +26,7 @@ import com.zhihudailytest.Adapter.NewsAdapter;
 import com.zhihudailytest.Bean.NewsBean;
 import com.zhihudailytest.Bean.Story;
 import com.zhihudailytest.CustomUI.Draw;
+import com.zhihudailytest.CustomUI.ViewPagerFragment;
 import com.zhihudailytest.Http.RetrofitManager;
 import com.zhihudailytest.R;
 import com.zhihudailytest.Utils.DateUtil;
@@ -49,6 +50,8 @@ import rx.schedulers.Schedulers;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends BaseFragment {
+    private static final int  WHEEL = 1;
+    private static final int WHEEL_WAIT = 2;
     @Bind(R.id.newsRecyclerView)
     RecyclerView newsRecyclerView;
     private List<Story> mNewsData = new ArrayList<Story>();
@@ -59,7 +62,8 @@ public class HomeFragment extends BaseFragment {
     private MyPagerAdapter mPagerAdapter;
     private TextView title;
     private LinearLayout dotLayout;
-    private final int THREAD_SLEEP_TIME = 5000;
+    private static final int delayTime = 5000;
+    private long lastTouchTime;
     private boolean isLoading = false;
     private String beforeDate;
     private int currentPage = 0;
@@ -68,7 +72,7 @@ public class HomeFragment extends BaseFragment {
     private int lastCount = 0;
     private Subscription loadMore;
     private Subscription loadData;
-
+    private  int selectPosition;
     @Override
     void onBroadcastReceive(Context context, Intent intent) {
         int id = intent.getIntExtra("id", -1);
@@ -96,8 +100,20 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public void handleMessage(Message msg) {
-            if (reference != null) {
-                super.handleMessage(msg);
+            if (reference.get()!= null) {
+                HomeFragment fraggment = reference.get();
+                if (fraggment.mTopStoryData.size() > 0) {
+                    if (msg.what == WHEEL) {
+
+                        int position = fraggment.mViewPager.getCurrentItem();
+                        fraggment.mViewPager.setCurrentItem((position + 1) % fraggment.mTopStoryData.size());
+                        removeCallbacks(fraggment.timeTask);
+                        postDelayed(fraggment.timeTask, delayTime);
+                    } else if (msg.what == WHEEL_WAIT) {
+                        removeCallbacks(fraggment.timeTask);
+                        postDelayed(fraggment.timeTask, delayTime);
+                    }
+                }
 
             }
 
@@ -109,9 +125,12 @@ public class HomeFragment extends BaseFragment {
     private Runnable timeTask = new Runnable() {
         @Override
         public void run() {
-            if (mTopStoryData.size() > 0)
-                mViewPager.setCurrentItem((mViewPager.getCurrentItem() + 1) % mTopStoryData.size());
-            mHanlder.postDelayed(timeTask, THREAD_SLEEP_TIME);
+            //避免手动滑动后，马上翻页，应该等到下一个延迟时间才自动滑动
+            if (System.currentTimeMillis() - lastTouchTime > delayTime - 500) {
+                mHanlder.sendEmptyMessage(WHEEL);
+            } else {
+                mHanlder.sendEmptyMessage(WHEEL_WAIT);
+            }
         }
     };
 
@@ -136,14 +155,12 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("abcd","onResume");
         mHanlder.removeCallbacks(timeTask);
-        mHanlder.postDelayed(timeTask, THREAD_SLEEP_TIME);
+        mHanlder.postDelayed(timeTask, delayTime);
     }
 
     @Override
     public void onPause() {
-        Log.e("abcd","onpause");
         mHanlder.removeCallbacks(timeTask);
         if (loadData != null && !loadData.isUnsubscribed())
             loadData.unsubscribe();
@@ -184,9 +201,11 @@ public class HomeFragment extends BaseFragment {
                         mNewsData.add(header);
                         mNewsData.addAll(stories);
                         mTopStoryData.clear();
+                        mTopStoryData.add(newsBean.getTop_stories().get(newsBean.getTop_stories().size()-1));
                         mTopStoryData.addAll(newsBean.getTop_stories());
+                        mTopStoryData.add(newsBean.getTop_stories().get(0));
                         mPagerAdapter.notifyDataSetChanged();
-                        //mAdapter.notifyItemRangeChanged(0,mNewsData.size());
+                        mViewPager.setCurrentItem(1);
                         mAdapter.notifyDataSetChanged();
 
                         initBanner();
@@ -273,19 +292,30 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                selected(position);
+                lastTouchTime = System.currentTimeMillis();
+                selectPosition=position;
+                if (position<1)
+                    selectPosition=mTopStoryData.size()-2;
+                else if (position>mTopStoryData.size()-2){
+                    selectPosition=1;
+                }
+                selected(selectPosition-1);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if (state==0){
+                    if (selectPosition==mTopStoryData.size()-2||selectPosition==1){
+                        mViewPager.setCurrentItem(selectPosition,false);
+                    }
+                }
             }
         });
 
     }
     private void initBanner() {
         if (dotLayout.getChildCount() < 1)
-            Draw.drawDot(getContext(), dotLayout, mTopStoryData.size());
+            Draw.drawDot(getContext(), dotLayout, mTopStoryData.size()-2);
         mViewPager.setCurrentItem(currentPage);
         selected(currentPage);
     }

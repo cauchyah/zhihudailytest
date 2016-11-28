@@ -160,4 +160,6 @@
     <color name="black">#000000</color><!--黑色 -->
     <color name="transparent">#0000</color><!-- 透明 -->
     <color name="transparent2">#8000</color><!-- 透明 -->
+    <color name="checkedColor">#303F9F</color>
+    <color name="uncheckColor">#fff</color>
 </resources>
