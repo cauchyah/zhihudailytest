@@ -180,7 +180,14 @@
             android:name="com.sina.weibo.sdk.net.DownloadService"
             android:exported="false" />
 
-        <activity android:name=".Activity.UmengLoginActivity"></activity>
+        <activity android:name=".Activity.UmengLoginActivity" />
+        <activity android:name=".PullTestActivity">
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
     </application>
 
 </manifest>
