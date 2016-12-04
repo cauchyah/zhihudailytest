@@ -26,6 +26,7 @@ import com.zhihudailytest.Adapter.NewsAdapter;
 import com.zhihudailytest.Bean.NewsBean;
 import com.zhihudailytest.Bean.Story;
 import com.zhihudailytest.CustomUI.Draw;
+import com.zhihudailytest.CustomUI.TitleItemdecoration;
 import com.zhihudailytest.CustomUI.ViewPagerFragment;
 import com.zhihudailytest.Http.RetrofitManager;
 import com.zhihudailytest.R;
@@ -182,7 +183,13 @@ public class HomeFragment extends BaseFragment {
                 .map(new Func1<NewsBean, NewsBean>() {
                     @Override
                     public NewsBean call(NewsBean newsBean) {
-                        ReadUtil.isRead(newsBean.getStories());
+                        List<Story> stories = newsBean.getStories();
+                        if (stories != null) {
+                            ReadUtil.isRead(stories);
+                            for (Story item:stories){
+                                item.setDate(newsBean.getDate());
+                            }
+                        }
                         return newsBean;
                     }
                 })
@@ -195,10 +202,8 @@ public class HomeFragment extends BaseFragment {
                         List<Story> stories = newsBean.getStories();
                         if (stories.size() <= lastCount) return;
                         lastCount = stories.size();
-                        Story header = new Story(newsBean.getDate());
                         beforeDate = newsBean.getDate();//最后加载的日期
                         mNewsData.clear();
-                        mNewsData.add(header);
                         mNewsData.addAll(stories);
                         mTopStoryData.clear();
                         mTopStoryData.add(newsBean.getTop_stories().get(newsBean.getTop_stories().size()-1));
@@ -239,6 +244,7 @@ public class HomeFragment extends BaseFragment {
         newsRecyclerView.setLayoutManager(mLinearLayoutManager);
         // 设置ItemAnimator
         newsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        newsRecyclerView.addItemDecoration(new TitleItemdecoration(getContext(),mNewsData));
         // 设置固定大小
         newsRecyclerView.setHasFixedSize(true);
         headerView = LayoutInflater.from(getContext()).inflate(R.layout.header_view, null);
@@ -265,7 +271,14 @@ public class HomeFragment extends BaseFragment {
                 int position = mLinearLayoutManager.findFirstVisibleItemPosition();
                 int lastPosition = mLinearLayoutManager.findLastVisibleItemPosition();
                 int viewType = mAdapter.getItemViewType(position);
-                if (viewType == 1) {
+                if (viewType == 2) {
+                    toolbar.setTitle("首页");
+                }
+                else if (position==1){
+                    toolbar.setTitle("今日热闻");
+                }
+                else if (!mNewsData.get(position-1).getDate().equals(mNewsData.get(position-2).getDate())) {
+
                     //日期
                     if (dy > 0)
                         toolbar.setTitle(DateUtil.string2date(
@@ -273,11 +286,8 @@ public class HomeFragment extends BaseFragment {
                     else {
                         String date = mNewsData.get(mAdapter.getRealPosition(position)).getDate();
                         date = (Integer.valueOf(date) + 1) + "";
-                       // LogUtil.d(date);
                         toolbar.setTitle(DateUtil.string2date(date));
                     }
-                } else if (viewType == 2) {
-                    toolbar.setTitle("首页");
                 }
                 if (dy > 0 && !isLoading && lastPosition == mNewsData.size()) {
                     isLoading = true;
@@ -344,7 +354,13 @@ public class HomeFragment extends BaseFragment {
                 .map(new Func1<NewsBean, NewsBean>() {
                     @Override
                     public NewsBean call(NewsBean newsBean) {
-                        ReadUtil.isRead(newsBean.getStories());
+                        List<Story> stories = newsBean.getStories();
+                        if (stories != null) {
+                            ReadUtil.isRead(stories);
+                            for (Story item:stories){
+                                item.setDate(newsBean.getDate());
+                            }
+                        }
                         return newsBean;
                     }
                 })
@@ -354,9 +370,7 @@ public class HomeFragment extends BaseFragment {
                     @Override
                     public void call(NewsBean newsBean) {
                         List<Story> stories = newsBean.getStories();
-                        Story header = new Story(newsBean.getDate());
                         beforeDate = newsBean.getDate();//最后加载的日期
-                        mNewsData.add(header);
                         mNewsData.addAll(stories);
                         mAdapter.notifyDataSetChanged();
                         isLoading = false;

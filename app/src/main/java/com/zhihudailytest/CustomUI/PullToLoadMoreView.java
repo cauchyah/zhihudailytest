@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Scroller;
+import android.widget.Toast;
 
 import com.zhihudailytest.R;
 
@@ -43,10 +45,11 @@ public class PullToLoadMoreView extends LinearLayout implements View.OnTouchList
     private boolean isOnce = false;
     private boolean canPull = false;
     private float downY;
+    private Scroller mScoller;
 
     private void init() {
         touchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
-
+        mScoller=new Scroller(getContext());
     }
 
     @Override
@@ -65,7 +68,8 @@ public class PullToLoadMoreView extends LinearLayout implements View.OnTouchList
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        setIsScrollAble(event);
+
+       setIsScrollAble(event);
         if(canPull){
             switch (event.getAction()){
                 case MotionEvent.ACTION_DOWN:
@@ -74,12 +78,13 @@ public class PullToLoadMoreView extends LinearLayout implements View.OnTouchList
                 case MotionEvent.ACTION_MOVE:
                     float moveY=event.getRawY();
                     int distance= (int) (moveY-downY);
-                    if (distance>0&&footerParams.topMargin==hideFooterHeight)
+                   /* if (distance>0&&footerParams.bottomMargin==-hideFooterHeight)
                         return  false;
                     if (Math.abs(distance)<touchSlop)
-                        return false;
-                    footerParams.topMargin= (int) (hideFooterHeight-distance/2.0);
-                    footerView.setLayoutParams(footerParams);
+                        return false;*/
+                    //footerParams.bottomMargin= (int) (hideFooterHeight+distance/2.0);
+                   // footerView.setLayoutParams(footerParams);
+                    mScoller.startScroll(0,0,0,distance);
                     break;
 
 
@@ -88,24 +93,36 @@ public class PullToLoadMoreView extends LinearLayout implements View.OnTouchList
         return false;
     }
 
+    @Override
+    public void computeScroll() {
+       if (mScoller.computeScrollOffset()){
+           this.scrollTo(mScoller.getCurrX(),mScoller.getCurrY());
+           invalidate();
+       }
+    }
+
     private void setIsScrollAble(MotionEvent event) {
-        int count = linearLayoutManager.getChildCount();
+        int count = linearLayoutManager.getItemCount();
         int last = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-        if (count == last + 1) {
-            if (canPull) {
-                downY = event.getRawY();
-            }
+       // Toast.makeText(getContext(),"count"+count+";LAST"+last,Toast.LENGTH_SHORT).show();
+        float moveY=event.getRawY();
+
+        if (count-1 == last&&moveY-downY<0) {
+            Toast.makeText(getContext(),"FOOTER",Toast.LENGTH_SHORT).show();
             canPull = true;
         }
         else{
-            /*if(footerParams.topMargin!=hideFooterHeight){
-                footerParams.topMargin=hideFooterHeight;
+           /* if(footerParams.bottomMargin!=0){
+                footerParams.bottomMargin=0;
                 footerView.setLayoutParams(footerParams);
             }*/
             canPull = false;
         }
         if (count == 0) {
             canPull = true;
+        }
+        if (!canPull) {
+            downY = event.getRawY();
         }
 
     }

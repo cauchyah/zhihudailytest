@@ -42,7 +42,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private View headerViewPager;
 
     protected final int ITEM = 0;
-    protected final int DATE = 1;
     protected final int HEADER = 2;
     protected OnItemClickListener mOnItemClickListener;
 
@@ -81,10 +80,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if (viewType == HEADER) {
             return new HeaderViewHolder(headerViewPager);
-        } else if (viewType == DATE) {
-
-            View view = layoutInflater.inflate(R.layout.news_header, parent, false);
-            return new DateViewHolder(view);
         } else {
             View view = layoutInflater.inflate(R.layout.news_item, parent, false);
             return new ItemViewHolder(view, this);
@@ -102,30 +97,26 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             //新闻item
 
             ((ItemViewHolder) holder).title.setText(story.getTitle());
-            if (story.isReaded()){
-                ((ItemViewHolder) holder).title.setTextColor(ContextCompat.getColor(mContext,R.color.readed));
+            if (story.isReaded()) {
+                ((ItemViewHolder) holder).title.setTextColor(ContextCompat.getColor(mContext, R.color.readed));
+            } else {
+                ((ItemViewHolder) holder).title.setTextColor(ContextCompat.getColor(mContext, R.color.unread));
             }
-            else{
-                ((ItemViewHolder) holder).title.setTextColor(ContextCompat.getColor(mContext,R.color.unread));
+            if (story.getImages() != null && story.getImages().length > 0) {
+                Glide.with(mContext)
+                        .load(story.getImages()[0])
+                        .skipMemoryCache(true)
+
+                        .dontAnimate()
+
+                        .error(R.drawable.load_error)
+                        .into((ImageView) ((ItemViewHolder) holder).imageView);
             }
-            Glide.with(mContext)
-                    .load(story.getImages()[0])
-                    .skipMemoryCache(true)
-
-                    .dontAnimate()
-
-                    .error(R.drawable.load_error)
-                    .into((ImageView) ((ItemViewHolder) holder).imageView);
             if (story.isMultipic()) {
                 ((ItemViewHolder) holder).multi.setVisibility(View.VISIBLE);
             } else {
                 ((ItemViewHolder) holder).multi.setVisibility(View.GONE);
             }
-        } else if (holder instanceof DateViewHolder) {
-            //头部Header
-            ((DateViewHolder) holder).dateTextView.setText(DateUtil.string2date(story.getDate())
-            );
-
         }
 
     }
@@ -133,35 +124,26 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
 
-       if (headerViewPager == null) {
+        if (headerViewPager == null) {
             return mList.size();
-        }
-        else
-        return mList.size() + 1;
+        } else
+            return mList.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
 
-       if (position==0&&headerViewPager!=null) return HEADER;
-        else if (position==0) return DATE;
-        else if (mList.get(position-1).getDate().equals("")){
-            return ITEM;
-        }
-        else{
-            return DATE;
-        }
-
+        if (position == 0 && headerViewPager != null) return HEADER;
+        return ITEM;
 
 
     }
 
     public int getRealPosition(int original) {
 
-       if (headerViewPager == null) {
-            return  original;
-        }
-        else return original-1;
+        if (headerViewPager == null) {
+            return original;
+        } else return original - 1;
 
     }
 
@@ -186,48 +168,30 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public void onClick(View v) {
 
-                //跳转详情页面
+            //跳转详情页面
             //存放id
-            Story story=mList.get(getAdapterPosition() - 1);
-            int currentId=story.getId();
-            ArrayList<Integer> idList=new ArrayList<Integer>();
-            for(Story one:mList){
-                if (one.getDate().equals("")){
-                    int id=one.getId();
-                    idList.add(id);
-                }
+            Story story = mList.get(getAdapterPosition() - 1);
+            int currentId = story.getId();
+            ArrayList<Integer> idList = new ArrayList<Integer>();
+            for (Story one : mList) {
+                int id = one.getId();
+                idList.add(id);
             }
 
-            Bundle bundle=new Bundle();
-            bundle.putIntegerArrayList("ids",idList);
-            bundle.putInt("current",currentId);
-               DetailActivity.actionStart(mContext,bundle);
-            if (!story.isReaded()){
+            Bundle bundle = new Bundle();
+            bundle.putIntegerArrayList("ids", idList);
+            bundle.putInt("current", currentId);
+            DetailActivity.actionStart(mContext, bundle);
+            if (!story.isReaded()) {
 
-                DataBaseDao dao=new DataBaseDao();
+                DataBaseDao dao = new DataBaseDao();
                 dao.markRead(currentId);
                 story.setReaded(true);
                 notifyItemChanged(getAdapterPosition());
             }
-
-
-
-
-
-
-            //}
-
         }
     }
-    public class DateViewHolder extends RecyclerView.ViewHolder {
-        private TextView dateTextView;
 
-        public DateViewHolder(View itemView) {
-            super(itemView);
-            dateTextView = (TextView) itemView.findViewById(R.id.date);
-
-        }
-    }
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
         public HeaderViewHolder(View itemView) {
             super(itemView);
