@@ -186,15 +186,15 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         else {
             if (position == 1) {
                 ((ItemViewHolder) holder).theme.setText("首页");
-                ((ItemViewHolder) holder).image.setVisibility(View.VISIBLE);
+                ((ItemViewHolder) holder).theme.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(mContext,R.drawable.homepage),null,null,null);
             } else {
                 ((ItemViewHolder) holder).theme.setText(mData.get(position - 1).getName());
-                ((ItemViewHolder) holder).image.setVisibility(View.GONE);
+                ((ItemViewHolder) holder).theme.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
             }
             if (mData.get(position-1).isSelected())
-                ((CardView) holder.itemView).setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.background));
+                ((LinearLayout) holder.itemView).setBackgroundColor(ContextCompat.getColor(mContext, R.color.background));
             else {
-                ((CardView) holder.itemView).setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.web_view_bg));
+                ((LinearLayout) holder.itemView).setBackgroundColor(ContextCompat.getColor(mContext, R.color.web_view_bg));
             }
         }
     }
@@ -222,27 +222,18 @@ public class DrawerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView theme;
-        private LinearLayout item;
 
-        private CardView cardView;
-        private ImageView image;
 
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             theme= (TextView) itemView.findViewById(R.id.theme);
-           item= (LinearLayout) itemView.findViewById(R.id.item);
-            cardView= (CardView) itemView.findViewById(R.id.cardview);
-            image= (ImageView) itemView.findViewById(R.id.home) ;
-
-           // itemView.setBackgroundColor(ContextCompat.getColor(mContext,R.color.background));
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             getmItemClickListener().onItemClick(getAdapterPosition());
-           // Toast.makeText(mContext, "item click", Toast.LENGTH_SHORT).show();
         }
     }
     public class HeaderViewHolder extends ItemViewHolder{

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/homepage"
+        android:title="首页"
+        android:icon="@drawable/homepage"
+        ></item>
+    <item
+        android:title="日常心理学"
+
+        android:id="@+id/xinlixue">
+    </item>
+    <item
+        android:title="用户推荐日报"
+        android:id="@+id/tuijian">
+    </item>
+    <item
+        android:title="电影日报"
+        android:id="@+id/dianying">
+    </item>
+    <item
+        android:title="不许无聊"
+        android:id="@+id/wuliao">
+    </item>
+    <item
+        android:title="设计日报"
+        android:id="@+id/sheji">
+    </item>
+    <item
+        android:title="大公司日报"
+        android:id="@+id/dagongsi">
+    </item>
+
+</menu>
