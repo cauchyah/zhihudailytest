@@ -148,6 +148,7 @@ public class ThemeFragment extends BaseFragment {
         Glide.with(ThemeFragment.this)
                 .load(themeInfo.getBackground())
                 .centerCrop()
+                .placeholder(R.drawable.image_top_default)
                 .skipMemoryCache(true)
                 .into(imageView);
         editorText.setVisibility(View.VISIBLE);

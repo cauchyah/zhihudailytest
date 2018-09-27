@@ -23,6 +23,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        xmlns:tools="http://schemas.android.com/tools"
+
         android:theme="@style/AppTheme">
         <meta-data
             android:name="UMENG_APPKEY"
