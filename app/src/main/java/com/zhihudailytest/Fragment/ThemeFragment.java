@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +23,14 @@ import com.zhihudailytest.Bean.Story;
 import com.zhihudailytest.Bean.ThemeInfo;
 import com.zhihudailytest.Http.RetrofitManager;
 import com.zhihudailytest.R;
-import com.zhihudailytest.Utils.LogUtil;
 import com.zhihudailytest.Utils.ReadUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -55,7 +52,7 @@ public class ThemeFragment extends BaseFragment {
     private ImageView imageView;
     private TextView editorText;
     private Subscription loadData;
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     public static ThemeFragment getInstance(int id, String title) {
         ThemeFragment fragment = new ThemeFragment();

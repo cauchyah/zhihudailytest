@@ -1,26 +1,8 @@
 package com.zhihudailytest.Activity;
 
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.zhihudailytest.Bean.NewsBean;
-import com.zhihudailytest.Http.RetrofitManager;
-import com.zhihudailytest.R;
-import com.zhihudailytest.Utils.LogUtil;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import android.support.v7.app.AppCompatActivity;
 
 
 public class RetrofitActivity extends AppCompatActivity {

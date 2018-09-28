@@ -15,13 +15,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PagerActivity extends AppCompatActivity {
-    @Bind(R.id.tab)
+    @BindView(R.id.tab)
     PagerTabStrip tabs;
-    @Bind(R.id.viewPager)
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
 
     @Override

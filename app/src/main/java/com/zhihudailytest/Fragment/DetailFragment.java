@@ -31,7 +31,7 @@ import com.zhihudailytest.Utils.SPUtils;
 
 import java.io.File;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.gpu.VignetteFilterTransformation;
 import rx.Subscription;
@@ -44,14 +44,14 @@ import rx.schedulers.Schedulers;
  */
 public class DetailFragment extends BaseFragment {
 
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView title;
     private View view;
-    @Bind(R.id.image)
+    @BindView(R.id.image)
      ImageView imageView;
-    @Bind(R.id.webView)
+    @BindView(R.id.webView)
      WebView webView;
-    @Bind(R.id.source)
+    @BindView(R.id.source)
      TextView source;
     private StoryDetail story=null;
 

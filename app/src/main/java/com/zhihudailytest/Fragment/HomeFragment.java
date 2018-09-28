@@ -39,7 +39,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,13 +47,14 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends BaseFragment {
     private static final int  WHEEL = 1;
     private static final int WHEEL_WAIT = 2;
-    @Bind(R.id.newsRecyclerView)
+    @BindView(R.id.newsRecyclerView)
     RecyclerView newsRecyclerView;
     private List<Story> mNewsData = new ArrayList<Story>();
     private List<Story> mTopStoryData = new ArrayList<Story>();

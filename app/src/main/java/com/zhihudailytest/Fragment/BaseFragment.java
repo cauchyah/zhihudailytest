@@ -19,9 +19,6 @@ import com.zhihudailytest.Activity.BaseActivity;
 import com.zhihudailytest.R;
 import com.zhihudailytest.Utils.NetworkUtil;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 /**
  * Created by Administrator on 2016/7/25.
  */

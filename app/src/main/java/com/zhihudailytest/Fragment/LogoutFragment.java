@@ -27,7 +27,7 @@ import com.zhihudailytest.Utils.SPUtils;
 
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -57,13 +57,13 @@ public class LogoutFragment extends BaseFragment {
 
     }
 
-    @Bind(R.id.avatar)
+    @BindView(R.id.avatar)
     ImageView avatar;
-    @Bind(R.id.sina)
+    @BindView(R.id.sina)
     TextView sina;
-    @Bind(R.id.qq)
+    @BindView(R.id.qq)
     TextView qq;
-    @Bind(R.id.name)
+    @BindView(R.id.name)
     TextView name;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

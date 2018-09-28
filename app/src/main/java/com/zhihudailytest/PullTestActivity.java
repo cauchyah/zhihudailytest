@@ -14,14 +14,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PullTestActivity extends AppCompatActivity {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @Bind(R.id.container)
+    @BindView(R.id.container)
     LinearLayout container;
     private LinearLayoutManager linearLayoutManager;
     private List<String> mData=new ArrayList<String>();

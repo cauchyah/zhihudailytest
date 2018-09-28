@@ -56,7 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -70,13 +70,13 @@ import rx.schedulers.Schedulers;
 
 public class MainActivityOld extends BaseActivity implements DrawerAdapter.ItemClickListener,DrawerAdapter.HeaderOnClickListener {
    //这里诗多余的的 又如何
-    @Bind(R.id.container_layout)
+    @BindView(R.id.container_layout)
     DrawerLayout mDrawerContainer;
-    @Bind(R.id.drawer)
+    @BindView(R.id.drawer)
     RecyclerView mDrawerContent;
-    @Bind(R.id.toolBar)
+    @BindView(R.id.toolBar)
     Toolbar toolbar;
-    @Bind(R.id.contentPanel)
+    @BindView(R.id.contentPanel)
     FrameLayout contentPanel;
     LinearLayoutManager mLinearLayoutManager;
     private ActionBarDrawerToggle drawerToggle;

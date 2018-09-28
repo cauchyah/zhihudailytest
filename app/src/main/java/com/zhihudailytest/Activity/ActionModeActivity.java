@@ -12,14 +12,14 @@ import android.webkit.WebViewClient;
 import com.zhihudailytest.R;
 import com.zhihudailytest.Utils.StatusBarCompat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ActionModeActivity extends BaseActivity {
 
 
-    @Bind(R.id.webView)
+    @BindView(R.id.webView)
     WebView webView;
 
 

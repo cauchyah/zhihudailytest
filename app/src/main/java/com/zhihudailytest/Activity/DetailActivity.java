@@ -38,7 +38,7 @@ import com.zhihudailytest.Utils.StatusBarCompat;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
@@ -59,15 +59,15 @@ public class DetailActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    @Bind(R.id.viewPager)
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
-    @Bind(R.id.favor)
+    @BindView(R.id.favor)
     TextView favor;
-    @Bind(R.id.comment)
+    @BindView(R.id.comment)
     TextView comment;
-    @Bind(R.id.collect)
+    @BindView(R.id.collect)
     TextView collect;
-    @Bind(R.id.share)
+    @BindView(R.id.share)
     TextView share;
 
 

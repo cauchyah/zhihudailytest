@@ -25,7 +25,6 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
